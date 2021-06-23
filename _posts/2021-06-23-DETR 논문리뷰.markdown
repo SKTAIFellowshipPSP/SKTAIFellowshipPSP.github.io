@@ -13,6 +13,7 @@ Object Detection 분야의 대표적인 모델들인 YOLO, Mask R-CNN, Faster R-
 어떻게 설계하느냐에 따라 성능이 많이 영향을 받는 점을 해결하고자 direct한 방법으로 Object Detection를 해결하고자 DETR를 고안했다고 합니다.
 
 DETR은 bipartite matching loss와 transformer를 사용했다는 것이 특징인데 먼저 bipartite matching loss 부터 설명할께요.
+![detr1](/assets/images/detr_asset/detr1.png)
 
 You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 
