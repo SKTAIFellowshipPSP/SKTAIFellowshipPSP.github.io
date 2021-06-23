@@ -1,10 +1,19 @@
 ---
 layout: post
-title:  "It's a new game"
-date:   2014-12-11 12:07:22
-description: "I am learning so much, yay"
+title:  "DETR 논문 리뷰"
+date:   2021-06-23 12:07:22
+description: "DETR 논문리뷰"
 categories: jekyll
 ---
+
+논문 정리가 주 목적이라 글이 난잡할 수 있습니다 😂
+
+Object Detection 분야의 대표적인 모델들인 YOLO, Mask R-CNN, Faster R-CNN를 비롯한 많은 모델들이 anchor, NMS와 같은 방법을 사용하는데 이 방법들이 indirect한 방법인데
+
+어떻게 설계하느냐에 따라 성능이 많이 영향을 받는 점을 해결하고자 direct한 방법으로 Object Detection를 해결하고자 DETR를 고안했다고 합니다.
+
+DETR은 bipartite matching loss와 transformer를 사용했다는 것이 특징인데 먼저 bipartite matching loss 부터 설명할께요.
+
 You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 
 To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
