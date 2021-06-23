@@ -15,14 +15,39 @@ Object Detection 분야의 대표적인 모델들인 YOLO, Mask R-CNN, Faster R-
 DETR은 bipartite matching loss와 transformer를 사용했다는 것이 특징인데 먼저 bipartite matching loss 부터 설명할께요.
 ![detr1](/assets/images/detr_asset/detr1.png)
 
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
+DETR 모델의 추론 결과와 ground truth를 이용해 loss를 계산할 건데 모델의 추론 결과에 해당하는 ground truth가 어떤 것인지 어떻게 알 수 있을까요?  헝가리안 알고리즘을 이용해
 
-To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+![detr2](/assets/images/detr_asset/detr2.png)
 
-![Queen Full](/assets/images/Queen_Full.jpg)
+L_match값의 합을 최소로 만들어주는 조합?을 구하고 그 조합에 따라
 
-Check out the [Jekyll docs][jekyll] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll’s dedicated Help repository][jekyll-help].
+![detr3](/assets/images/detr_asset/detr3.png)
 
-[jekyll]:      http://jekyllrb.com
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-help]: https://github.com/jekyll/jekyll-help
+loss를 계산하는겁니다. loss는 giou loss, l1 loss, cross entropy를 이용해 계산합니다. 즉 헝가리안 알고리즘으로 L_match 값의 합을 최소로 만들어 주는 조합을 찾고 loss를 계산하는 것입니다.
+
+모델은 간단합니다. 50줄 내로(inference) 구현할 수 있다고 할정도로 기존의 cnn backbone + transformer + 3층의 fc layer 조합으로 간단하게 구현할 수 있고 모든 pairwise들 간의 interaction이 가능한 self attention으로 중복된 추론 결과를 제거하기 위해 transformer를 사용했다고 합니다.
+
+![detr4](/assets/images/detr_asset/detr4.png)
+
+실험 파트에 많은 내용이 있었는데 흥미로웠던 부분만 설명하겠습니다😂 
+
+![detr5](/assets/images/detr_asset/detr5.png)
+
+encoder, decoder attention 부분이 가장 흥미로웠는데요 encoder의 개수가 많을 수록 높은 성능을 보였고 마지막 encoder의 attention map 관찰로 encoder가 object들을 분리하는 역활을 하는 것을 알 수 있었다고 합니다
+
+![detr6](/assets/images/detr_asset/detr6.png)
+
+decoder 역시 개수가 많을 수록 성능이 높아졌고 개수가 많아 질 수록 NMS 적용한 결과와 차이가 줄어듬을 관찰 할 수 있었다고 합니다.
+
+![detr7](/assets/images/detr_asset/detr7.png)
+
+그리고 decoder는 경계 구분을 위한 중요 point들?을 attend한다고 합니다. 여기 사진에서는 코끼리의 코, 발이네요
+
+[https://github.com/facebookresearch/detr](https://github.com/facebookresearch/detr)
+
+코드는 여기서 볼 수 있어요!
+
+궁금한점?
+
+  1. object query는 무엇일까요? 학습시킨 positional embedding이라고 하고 inference 소스 코드에는 random한 값으로 되어있는데 좀 더 찾아봐야겠네요
+  2. Yolo나 Mask R-CNN, Faster R-CNN과 같은 기존 방법들은 어떻게 했나? 이건 노오력을 더 하겠습니다,,
